@@ -1,4 +1,6 @@
-﻿namespace HumansAPI.Models.Domain
+﻿using HumansAPI.Enums;
+
+namespace HumansAPI.Models.Domain
 {
     public class HumanConnection : BaseEntity
     {
@@ -12,5 +14,8 @@
         /// Navigation property
         /// </summary>
         public Human SecondHuman { get; set; }
+        public ConnectionType Type { get; set; }
     }
+
+    
 }

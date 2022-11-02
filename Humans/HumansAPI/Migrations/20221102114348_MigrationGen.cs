@@ -53,7 +53,8 @@ namespace HumansAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstHumanId = table.Column<int>(type: "int", nullable: false),
-                    SecondHumanId = table.Column<int>(type: "int", nullable: false)
+                    SecondHumanId = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
