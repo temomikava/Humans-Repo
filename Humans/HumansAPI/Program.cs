@@ -1,4 +1,6 @@
 using HumansAPI.Data;
+using HumansAPI.Models.Domain;
+using HumansAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HumansConnectionString")));
+builder.Services.AddScoped<IRepository<Human>, Repository<Human>>();
+builder.Services.AddScoped<IRepository<City>, Repository<City>>();
+builder.Services.AddScoped<IRepository<HumanConnection>, Repository<HumanConnection>>();
+builder.Services.AddScoped<IRepository<Phone>, Repository<Phone>>();
 
 var app = builder.Build();
 
