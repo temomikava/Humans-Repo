@@ -10,7 +10,9 @@ namespace HumansAPI.Data
 
         }
 
-        DbSet<Human> Humans { get; set; }
+        public DbSet<Human> Humans { get; set; }
+
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

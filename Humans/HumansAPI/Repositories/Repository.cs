@@ -13,6 +13,7 @@ namespace HumansAPI.Repositories
         {
             this.context = context;
         }
+
         public async Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await context.Set<TEntity>().AnyAsync(predicate);
@@ -66,9 +67,10 @@ namespace HumansAPI.Repositories
 
         public async Task<int> UpdateAsync(int id, TEntity entity)
         {
-            var existing=context.Set<TEntity>().Find(id);
-            if (existing != null)
+            var existing = context.Set<TEntity>().Find(id);
+
             context.Entry(existing).CurrentValues.SetValues(entity);
+
             return await context.SaveChangesAsync();
         }
     }
