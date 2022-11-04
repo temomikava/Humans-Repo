@@ -14,17 +14,13 @@ namespace HumansAPI.Controllers
     {
         private readonly IMapper mapper;
         private readonly IRepository<Human> humans;
-        private readonly IRepository<City> cities;
-        private readonly IRepository<HumanConnection> connections;
         private readonly IRepository<Phone> phones;
 
-        public PhonesController(IMapper mapper, IRepository<Human> humans, IRepository<City> cities,
-                                IRepository<HumanConnection> connections, IRepository<Phone> phones)
+        public PhonesController(IMapper mapper, IRepository<Human> humans,
+                                 IRepository<Phone> phones)
         {
             this.mapper = mapper;
             this.humans = humans;
-            this.cities = cities;
-            this.connections = connections;
             this.phones = phones;
         }
       

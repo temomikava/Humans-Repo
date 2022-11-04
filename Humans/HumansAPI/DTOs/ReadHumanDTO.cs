@@ -2,7 +2,7 @@
 
 namespace HumansAPI.DTOs
 {
-    public class ReadHumanRequest
+    public class ReadHumanDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -14,6 +14,6 @@ namespace HumansAPI.DTOs
         public List<ReadPhoneDTO>? Phones { get; set; } = new();
         public string? PhotoPath { get; set; }
         
-        public List<ReadConnectedHumanRequest>? Connections { get; set; }= new();
+        public List<ReadConnectedHumanDTO>? Connections { get; set; }= new();
     }
 }
