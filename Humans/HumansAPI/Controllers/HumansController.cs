@@ -44,7 +44,7 @@ namespace HumansAPI.Controllers
             {
                 var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
                 var connectedHumans=await connections.ReadAsync(x=>x.FirstHumanId==human.Id || x.SecondHumanId==human.Id);
-                human.Phones?.AddRange(mapper.Map<IEnumerable<SetPhoneDto>>(numbers));
+                human.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneRequest>>(numbers));
                 human.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanRequest>>(connectedHumans));
             }
             return Ok(readHumanDto);
@@ -52,7 +52,7 @@ namespace HumansAPI.Controllers
 
         // GET: api/Humans/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Human>> GetHuman(int id)
+        public async Task<ActionResult<ReadHumanRequest>> GetHuman(int id)
         {
             var human = await humans.ReadAsync(id);
 
@@ -63,9 +63,9 @@ namespace HumansAPI.Controllers
             var humanDto=mapper.Map<ReadHumanRequest>(human);
             var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
             var connectedHumans = await connections.ReadAsync(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);
-            humanDto.Phones?.AddRange(mapper.Map<IEnumerable<SetPhoneDto>>(numbers));
+            humanDto.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneRequest>>(numbers));
             humanDto.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanRequest>>(connectedHumans));
-            return human;
+            return humanDto;
         }
 
         // PUT: api/Humans/5
@@ -73,20 +73,8 @@ namespace HumansAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> PutHuman(UpdateHumanRequest request)
         {
-            
-            if (! await humans.CheckAsync(x=>x.Id==request.Id))
-            {
-                return BadRequest();               
-            }
-            foreach (var phoneDto in request.Phones)
-            {
-               var phone = phones.ReadAsync(x => x.HumanId == request.Id).Result.FirstOrDefault();
-                phone.PhoneNumber = phoneDto.PhoneNumber;
-                phone.Type=phoneDto.Type;
-               await phones.UpdateAsync(phone);
-            }
+           
             await humans.UpdateAsync(request.Id, mapper.Map<Human>(request));
-
             return NoContent();
         }
 
@@ -95,8 +83,7 @@ namespace HumansAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Human>> PostHuman(CreateHumanRequest request)
         {
-            var human=mapper.Map<Human>(request);
-            await  humans.CreateAsync(human);
+            await  humans.CreateAsync(mapper.Map<Human>(request));
             return NoContent();
         }
 
@@ -106,12 +93,10 @@ namespace HumansAPI.Controllers
         {
             if (! await humans.CheckAsync(x=>x.Id==id))
             {
-                return BadRequest();
+                return NotFound();
             }
             await humans.DeleteAsync(id);                      
             return NoContent();
-        }
-
-        
+        }      
     }
 }
