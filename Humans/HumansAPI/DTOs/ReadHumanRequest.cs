@@ -11,7 +11,7 @@ namespace HumansAPI.DTOs
         public string PersonalNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? CityId { get; set; }
-        public List<ReadPhoneRequest>? Phones { get; set; } = new();
+        public List<ReadPhoneDTO>? Phones { get; set; } = new();
         public string? PhotoPath { get; set; }
         
         public List<ReadConnectedHumanRequest>? Connections { get; set; }= new();

@@ -14,7 +14,7 @@ namespace HumansAPI.DTOs
             CreateMap<HumanConnection, UpdateConnectedHumanRequest>().ReverseMap();
             CreateMap<HumanConnection, AddConnectedHumanRequest>().ReverseMap();
             CreateMap<Phone, AddPhoneRequest>().ReverseMap();
-            CreateMap<Phone, ReadPhoneRequest>().ReverseMap();
+            CreateMap<Phone, ReadPhoneDTO>().ReverseMap();
             CreateMap<Phone, UpdatePhoneRequest>().ReverseMap();
 
         }

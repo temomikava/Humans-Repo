@@ -44,7 +44,7 @@ namespace HumansAPI.Controllers
             {
                 var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
                 var connectedHumans=await connections.ReadAsync(x=>x.FirstHumanId==human.Id || x.SecondHumanId==human.Id);
-                human.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneRequest>>(numbers));
+                human.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneDTO>>(numbers));
                 human.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanRequest>>(connectedHumans));
             }
             return Ok(readHumanDto);
@@ -63,7 +63,7 @@ namespace HumansAPI.Controllers
             var humanDto=mapper.Map<ReadHumanRequest>(human);
             var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
             var connectedHumans = await connections.ReadAsync(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);
-            humanDto.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneRequest>>(numbers));
+            humanDto.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneDTO>>(numbers));
             humanDto.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanRequest>>(connectedHumans));
             return humanDto;
         }
