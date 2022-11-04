@@ -52,7 +52,7 @@ namespace HumansAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReadHumanDTO>> GetHuman(int id)
         {
-            var human = await humans.ReadAsync(id);
+            var human =await  humans.ReadAsync(id);
 
             if (human == null)
             {
