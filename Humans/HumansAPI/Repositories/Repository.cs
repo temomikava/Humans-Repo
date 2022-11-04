@@ -19,6 +19,11 @@ namespace HumansAPI.Repositories
             return await context.Set<TEntity>().AnyAsync(predicate);
         }
 
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await context.Set<TEntity>().CountAsync(predicate);
+        }
+
         public async Task<int> CreateAsync(TEntity entity)
         {
             context.Set<TEntity>().Add(entity);

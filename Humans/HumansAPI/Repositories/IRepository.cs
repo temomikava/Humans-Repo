@@ -15,5 +15,6 @@ namespace HumansAPI.Repositories
         Task<int> DeleteAsync(TEntity entity);
         Task<int> DeleteRangeAsync(IEnumerable<TEntity> entities);
         Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

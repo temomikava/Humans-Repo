@@ -30,6 +30,10 @@ namespace HumansAPI.Controllers
         {
             var connectionAlreadyExists = humanConnections.CheckAsync(x => (x.FirstHumanId == request.FirstHumanId && x.SecondHumanId == request.SecondHumanId)
                                         || (x.FirstHumanId == request.SecondHumanId && x.SecondHumanId == request.FirstHumanId)).Result;
+            if (request.FirstHumanId==request.SecondHumanId)
+            {
+                return BadRequest("FirstHumanId and SecondHumanId should be different");
+            }
             if (connectionAlreadyExists)
             {
                 return BadRequest("connection between this users already exists");
