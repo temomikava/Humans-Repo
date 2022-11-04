@@ -28,6 +28,12 @@ namespace HumansAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddConnectedHumanRequest request)
         {
+            var connectionAlreadyExists = humanConnections.CheckAsync(x => (x.FirstHumanId == request.FirstHumanId && x.SecondHumanId == request.SecondHumanId)
+                                        || (x.FirstHumanId == request.SecondHumanId && x.SecondHumanId == request.FirstHumanId)).Result;
+            if (connectionAlreadyExists)
+            {
+                return BadRequest("connection between this users already exists");
+            }
             await humanConnections.CreateAsync(mapper.Map<HumanConnection>(request));
             return NoContent();
         }      
