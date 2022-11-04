@@ -11,7 +11,6 @@ namespace HumansAPI.DTOs
         public string PersonalNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? CityId { get; set; }
-        public List<UpdatePhoneDto>? Phones { get; set; } = new();
         
     }
 }

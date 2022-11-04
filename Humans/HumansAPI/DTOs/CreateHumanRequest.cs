@@ -10,7 +10,6 @@ namespace HumansAPI.DTOs
         public string PersonalNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? CityId { get; set; }     
-        public List<SetPhoneDto>? Phones { get; set; }
         public string? PhotoPath { get; set; }       
     }
 }
