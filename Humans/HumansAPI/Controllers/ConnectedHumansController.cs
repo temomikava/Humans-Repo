@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HumansAPI.DTOs;
 using HumansAPI.Models.Domain;
+using HumansAPI.Report;
 using HumansAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,26 @@ namespace HumansAPI.Controllers
             this.humanConnections = humanConnections;
         }
 
+        [HttpGet("Report")]
+        public async Task<List<Relation>> Get()
+        {
+            var connectedHumans = await humanConnections.ReadAsync();
+            var report = connectedHumans.GroupBy(x => x.FirstHumanId).Select(groupedbyFirstHumanId =>
+            {
+                var groupedByConnectionType = groupedbyFirstHumanId.GroupBy(x => x.Type);
+                var connections = groupedByConnectionType.Select(x => new Connection(x.Count(), x.Key)).ToList();
+                return new Relation(groupedbyFirstHumanId.Key, connections);
+            }).ToList();
+            var report2 = connectedHumans.GroupBy(x => x.SecondHumanId).Select(groupedBySecondHumanId =>
+            {
+                var groupedByConnectionType = groupedBySecondHumanId.GroupBy(x => x.Type);
+                var connections = groupedByConnectionType.Select(x => new Connection(x.Count(), x.Key)).ToList();
+                return new Relation(groupedBySecondHumanId.Key, connections);
+            }).ToList();
+            report.AddRange(report2);
+            return report;          
+        }
+                  
         [HttpGet("{humanId}/{connectionType}")]
         public async Task<ActionResult<IEnumerable<ReadConnectedHumanDTO>>> Get([FromRoute]int humanId,[FromRoute] int connectionType)
         {
