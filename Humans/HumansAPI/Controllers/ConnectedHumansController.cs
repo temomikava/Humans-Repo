@@ -22,9 +22,31 @@ namespace HumansAPI.Controllers
             this.humans = humans;
             this.humanConnections = humanConnections;
         }
-       
 
+        [HttpGet("{humanId}/{connectionType}")]
+        public async Task<ActionResult<IEnumerable<ReadConnectedHumanDTO>>> Get([FromRoute]int humanId,[FromRoute] int connectionType)
+        {
+            if (!await humans.CheckAsync(x => x.Id == humanId))
+            {
+                return NotFound();
+            }
+            var connections = await humanConnections.ReadAsync(x => (x.FirstHumanId == humanId || x.SecondHumanId == humanId) && 
+                                                                    (int)x.Type == connectionType);
+            return Ok(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connections));
+        }
+
+        [HttpGet("{humanId}")]
+        public async Task<ActionResult<IEnumerable<ReadConnectedHumanDTO>>> Get([FromRoute]int humanId)
+        {
+            if (! await humans.CheckAsync(x=>x.Id==humanId))
+            {
+                return NotFound();                    
+            }
+            var connections =await humanConnections.ReadAsync(x => x.FirstHumanId == humanId || x.SecondHumanId == humanId);
+            return Ok(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connections));
+        }
         // POST api/<ConnectedHumansController>
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddConnectedHumanRequest request)
         {

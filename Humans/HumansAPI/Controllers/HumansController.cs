@@ -63,7 +63,7 @@ namespace HumansAPI.Controllers
             var connectedHumans = await connections.ReadAsync(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);
             humanDto.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneDTO>>(numbers));
             humanDto.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connectedHumans));
-            return humanDto;
+            return Ok(humanDto);
         }
 
         // PUT: api/Humans/5
