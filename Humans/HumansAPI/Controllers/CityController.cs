@@ -24,14 +24,14 @@ namespace HumansAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<ReadCityDTO>> Get()
         {
-            return mapper.Map<IEnumerable<ReadCityDTO>>(cities.ReadAsync().Result);
+            return  mapper.Map<IEnumerable<ReadCityDTO>>(await cities.ReadAsync());
         }
 
         // GET api/<CityController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ReadCityDTO>> Get(int id)
         {
-            var city= cities.ReadAsync(id).Result;
+            var city=await cities.ReadAsync(id);
             if (city==null)
             {
                 return NotFound();
@@ -49,15 +49,25 @@ namespace HumansAPI.Controllers
 
         // PUT api/<CityController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateCityRequest request)
         {
-
+            if (! await cities.CheckAsync(x=>x.Id==id))
+            {
+                return NotFound();
+            }
+            await cities.UpdateAsync(mapper.Map<City>(request));
+            return NoContent();
         }
 
         // DELETE api/<CityController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (! await cities.CheckAsync(x=>x.Id==id))
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }
