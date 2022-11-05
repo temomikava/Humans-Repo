@@ -8,12 +8,13 @@ namespace HumansAPI.Validators
     public class AddPhoneRequestValidator:AbstractValidator<AddPhoneRequest>
     {
         private readonly IRepository<Human> humans;
+        private readonly IRepository<Phone> phones;
 
-        public AddPhoneRequestValidator(IRepository<Human> humans)
+        public AddPhoneRequestValidator(IRepository<Human> humans,IRepository<Phone> phones)
         {
             this.humans = humans;
-
-            RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50);
+            this.phones = phones;
+            RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50).Must(IfExistPhone);
             RuleFor(x => x.Type).IsInEnum();
             RuleFor(x => x.HumanId).Must(IfExistHuman);
             
@@ -22,6 +23,12 @@ namespace HumansAPI.Validators
         private bool IfExistHuman(int humanId)
         {
             return humans.CheckAsync(x => x.Id == humanId).Result;
+        }
+        private  bool IfExistPhone(string number)
+        {
+            if ( phones.CheckAsync(x => x.PhoneNumber == number).Result)
+                return false;
+            return true;
         }
     }
 }

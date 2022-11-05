@@ -32,7 +32,8 @@ namespace HumansAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<IEnumerable<ReadPhoneDTO>>(phones.ReadAsync(x=>x.HumanId==HumanId)));
+            var phonesInDb = phones.ReadAsync(x => x.HumanId == HumanId).Result;
+            return Ok(mapper.Map<IEnumerable<ReadPhoneDTO>>(phonesInDb));
         }
 
         // POST api/<PhonesController>
@@ -45,9 +46,11 @@ namespace HumansAPI.Controllers
 
         // PUT api/<PhonesController>/5
         [HttpPut]
-        public void Put([FromBody] UpdatePhoneRequest request)
+        public async Task<IActionResult> Put([FromBody] UpdatePhoneRequest request)
         {
-            phones.UpdateAsync(mapper.Map<Phone>(request));
+            var phone=mapper.Map<Phone>(request);
+            await phones.UpdateAsync(phone);
+            return NoContent();
         }
 
         // DELETE api/<PhonesController>/5

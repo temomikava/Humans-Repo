@@ -55,7 +55,9 @@ namespace HumansAPI.Controllers
             {
                 return NotFound();
             }
-            await cities.UpdateAsync(mapper.Map<City>(request));
+            var city = mapper.Map<City>(request);
+            city.Id = id;
+            await cities.UpdateAsync(city);
             return NoContent();
         }
 
@@ -67,6 +69,7 @@ namespace HumansAPI.Controllers
             {
                 return NotFound();
             }
+            await cities.DeleteAsync(id);
             return NoContent();
         }
     }
