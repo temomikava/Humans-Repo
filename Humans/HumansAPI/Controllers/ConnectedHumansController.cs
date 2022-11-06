@@ -28,20 +28,16 @@ namespace HumansAPI.Controllers
         public async Task<List<Relation>> Get()
         {
             var connectedHumans = await humanConnections.ReadAsync();
-            var report = connectedHumans.GroupBy(x => x.FirstHumanId).Select(groupedbyFirstHumanId =>
+            var allHumans = await humans.ReadAsync();
+            
+            var report = allHumans.OrderBy(x => x.Id).Select(human =>
             {
-                var groupedByConnectionType = groupedbyFirstHumanId.GroupBy(x => x.Type);
-                var connections = groupedByConnectionType.Select(x => new Connection(x.Count(), x.Key)).ToList();
-                return new Relation(groupedbyFirstHumanId.Key, connections);
-            }).ToList();
-            var report2 = connectedHumans.GroupBy(x => x.SecondHumanId).Select(groupedBySecondHumanId =>
-            {
-                var groupedByConnectionType = groupedBySecondHumanId.GroupBy(x => x.Type);
-                var connections = groupedByConnectionType.Select(x => new Connection(x.Count(), x.Key)).ToList();
-                return new Relation(groupedBySecondHumanId.Key, connections);
-            }).ToList();
-            report.AddRange(report2);
-            return report;          
+                var relatedConnections = connectedHumans.Where(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);                   
+                var groupedRelatedConnections = relatedConnections.GroupBy(x => x.Type);
+                var connections = groupedRelatedConnections.Select(x => new Connection(x.Count(), x.Key)).ToList();
+                return new Relation(human.Id, connections);
+            });
+            return report.ToList();          
         }
                   
         [HttpGet("{humanId}/{connectionType}")]
