@@ -71,7 +71,10 @@ namespace HumansAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> PutHuman(UpdateHumanRequest request)
         {
-           
+            if (! await humans.CheckAsync(x=>x.Id==request.Id))
+            {
+                return NotFound();
+            }
             await humans.UpdateAsync(request.Id, mapper.Map<Human>(request));
             return NoContent();
         }

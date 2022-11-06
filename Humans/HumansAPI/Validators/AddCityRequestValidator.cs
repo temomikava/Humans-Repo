@@ -12,7 +12,9 @@ namespace HumansAPI.Validators
         public AddCityRequestValidator(IRepository<City> cities)
         {
             this.cities = cities;
-            RuleFor(x => x.Name).NotEmpty().Length(2, 20).Matches("^[a-zA-Z]*$|^[ა-ჰ]*$").Must(IfExistCity);
+            RuleFor(x => x.Name).NotEmpty().Length(2, 20)
+                .Matches("^[a-zA-Z]*$|^[ა-ჰ]*$").WithMessage("ქალაქის სახელი უნდა შედგემოდეს მხოლოდ ქართული ან მხოლოდ ლათინური სიმბოლოებისგან.")
+                .Must(IfExistCity).WithMessage("ქალაქი იგივე სახელით უკვე არსებობს.");
         }
         private bool IfExistCity(string? name)
         {

@@ -1,18 +1,27 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using HumansAPI.Data;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.ValidatorOptions.CascadeMode = CascadeMode.Stop;
+                    s.ValidatorOptions.LanguageManager.Culture = new CultureInfo("en-US");
+                    s.RegisterValidatorsFromAssemblyContaining<Program>();
 
+                    // more validators
+                });
 //warning: type or member is absolete
-builder.Services.AddFluentValidation(opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+//builder.Services.AddFluentValidation(opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -12,8 +12,8 @@ namespace HumansAPI.Validators
         public AddConnectedHumanRequestValidator(IRepository<Human> humans)
         {
             this.humans = humans;
-            RuleFor(x => x.FirstHumanId).NotEmpty().Must(IfExistHuman);
-            RuleFor(x => x.SecondHumanId).NotEmpty().Must(IfExistHuman);
+            RuleFor(x => x.FirstHumanId).NotEmpty().Must(IfExistHuman).WithMessage("ადამიანი ვერ მოიძებნა");
+            RuleFor(x => x.SecondHumanId).NotEmpty().Must(IfExistHuman).WithMessage("ადამიანი ვერ მოიძებნა");
             RuleFor(x => x.Type).IsInEnum();
         }
 

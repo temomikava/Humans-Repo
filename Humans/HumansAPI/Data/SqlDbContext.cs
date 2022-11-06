@@ -12,7 +12,7 @@ namespace HumansAPI.Data
 
         }
 
-        public DbSet<Human> Humans { get; set; }
+        public DbSet<Human>? Humans { get; set; }
 
 
 

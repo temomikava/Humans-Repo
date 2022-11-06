@@ -14,9 +14,10 @@ namespace HumansAPI.Validators
         {
             this.humans = humans;
             this.phones = phones;
-            RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50).Must(IfExistPhone);
+            RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50)
+                .Must(IfExistPhone).WithMessage("ნომერი უკვე დარეგისტრირებულია");
             RuleFor(x => x.Type).IsInEnum();
-            RuleFor(x => x.HumanId).Must(IfExistHuman);
+            RuleFor(x => x.HumanId).NotEmpty().Must(IfExistHuman).WithMessage("ადამიანი ვერ მოიძებნა");
             
         }
 

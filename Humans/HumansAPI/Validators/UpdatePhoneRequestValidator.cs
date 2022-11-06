@@ -14,14 +14,16 @@ namespace HumansAPI.Validators
         {
             this.phones = phones;
             this.humans = humans;
-            RuleFor(x => x.HumanId).Must(IfExistHuman);
-            RuleFor(x => x.Id).Must(IfExistPhone);
-            RuleFor(x => x.Type).IsInEnum();
+            RuleFor(x => x.HumanId).NotEmpty().Must(IfExistHuman).WithMessage("ადამიანი ვერ მოიძებნა");
+            RuleFor(x => x.Id).NotEmpty().Must(IfExistPhone).WithMessage("ნომერი უკვე დარეგისტრირებულია");
+            RuleFor(x => x.Type).NotEmpty().IsInEnum();
             RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50);
         }
         private bool IfExistPhone(int id)
         {
-            return phones.CheckAsync(x => x.Id == id).Result;
+            if (phones.CheckAsync(x => x.Id == id).Result)
+                return false;
+            return true;
         }
         private bool IfExistHuman(int humanId)
         {
