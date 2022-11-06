@@ -26,7 +26,7 @@ namespace HumansAPI.Controllers
         }
 
         [HttpGet("Report")]
-        public async Task<List<Relation>> Get()
+        public async Task<ActionResult<IEnumerable<Relation>>> Get()
         {
             var connectedHumans = await humanConnections.ReadAsync();
             var allHumans = await humans.ReadAsync();
@@ -39,7 +39,7 @@ namespace HumansAPI.Controllers
                 var connections = groupedRelatedConnections.Select(x => new Connection(x.Count(), x.Key)).ToList();
                 return new Relation(human.Id, connections);
             });
-            return report.ToList();          
+            return Ok(report);          
         }
                   
         [HttpGet("{humanId}/{connectionType}")]

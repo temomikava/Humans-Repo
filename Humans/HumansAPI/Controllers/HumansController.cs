@@ -37,11 +37,17 @@ namespace HumansAPI.Controllers
 
         // GET: api/Humans
         [HttpGet("GetAllHuman")]
-        public async Task<ActionResult<IEnumerable<ReadHumanDTO>>> GetHumans()
+        public async Task<ActionResult<IEnumerable<ReadHumanDTO>>> GetHumans([FromQuery] GetAllHumanRequest request)
         {
-            var result=await humans.ReadAsync();
-            
-            var readHumanDto = mapper.Map<IEnumerable<ReadHumanDTO>>(result);
+            var result = await humans.ReadAsync();
+            var filteredResult = result.Where(x =>
+                 (request.PersonalNo == null || x.PersonalNumber.Contains(request.PersonalNo)) &&
+                 (request.FirstName == null || x.FirstName.Contains(request.FirstName)) &&
+                 (request.LastName == null || x.LastName.Contains(request.LastName)));
+            var pageSize = (float)request.PageSize;
+            var pageCount = Math.Ceiling(filteredResult.Count() / pageSize);
+            var product = filteredResult.Skip((request.PageIndex - 1) * (int)pageSize).Take((int)pageSize);
+            var readHumanDto = mapper.Map<IEnumerable<ReadHumanDTO>>(product);
             foreach (var human in readHumanDto)
             {
                 var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
@@ -52,7 +58,13 @@ namespace HumansAPI.Controllers
                 human.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connectedHumans));
                 human.City=mapper.Map<ReadCityDTO>(city);
             }
-            return Ok(readHumanDto);
+            return Ok(new Response
+            {
+                PageIndex=request.PageIndex,
+                PageCount=(int)pageCount,
+                PageSize=request.PageSize,
+                Items=readHumanDto
+            }) ;
         }
 
         // GET: api/Humans/5
