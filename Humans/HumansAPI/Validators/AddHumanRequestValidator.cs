@@ -1,18 +1,18 @@
 ﻿using FluentValidation;
-using HumansAPI.DTOs;
 using HumansAPI.Enums;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
+using HumansAPI.Requests;
 using System.Text.RegularExpressions;
 
 namespace HumansAPI.Validators
 {
-    public class CreateHumanRequestValidator:AbstractValidator<CreateHumanRequest>
+    public class AddHumanRequestValidator:AbstractValidator<AddHumanRequest>
     {
         private readonly IRepository<City> cities;
         private readonly IRepository<Human> humans;
 
-        public CreateHumanRequestValidator(IRepository<City> cities,IRepository<Human> humans)
+        public AddHumanRequestValidator(IRepository<City> cities,IRepository<Human> humans)
         {
             this.cities = cities;
             this.humans = humans;
@@ -27,7 +27,7 @@ namespace HumansAPI.Validators
             RuleFor(x => x.CityId).NotNull().Must(IfExistCity).WithMessage("ქალაქი ვერ მოიძებნა");
         }
 
-        private bool IfExistCity(int? cityId)
+        private bool IfExistCity(int cityId)
         {
             return cities.CheckAsync(x => x.Id == cityId).Result;
         }

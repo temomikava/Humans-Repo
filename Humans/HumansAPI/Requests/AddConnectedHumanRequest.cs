@@ -1,6 +1,6 @@
 ﻿using HumansAPI.Enums;
 
-namespace HumansAPI.DTOs
+namespace HumansAPI.Requests
 {
     public class AddConnectedHumanRequest
     {

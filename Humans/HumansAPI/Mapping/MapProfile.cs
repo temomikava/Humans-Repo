@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using HumansAPI.DTOs;
 using HumansAPI.Models.Domain;
+using HumansAPI.Requests;
 
-namespace HumansAPI.DTOs
+namespace HumansAPI.Mapping
 {
-    public class MapProfile:Profile
+    public class MapProfile : Profile
     {
         public MapProfile()
         {
-            CreateMap<Human, CreateHumanRequest>().ReverseMap();
+            CreateMap<Human, AddHumanRequest>().ReverseMap();
             CreateMap<Human, ReadHumanDTO>().ReverseMap();
             CreateMap<Human, UpdateHumanRequest>().ReverseMap();
             CreateMap<HumanConnection, ReadConnectedHumanDTO>().ReverseMap();

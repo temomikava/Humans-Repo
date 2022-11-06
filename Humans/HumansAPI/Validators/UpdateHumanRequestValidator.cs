@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using HumansAPI.DTOs;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
+using HumansAPI.Requests;
 
 namespace HumansAPI.Validators
 {
