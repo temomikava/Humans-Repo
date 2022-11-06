@@ -1,4 +1,4 @@
-﻿namespace HumansAPI.DTOs
+﻿namespace HumansAPI.Requests
 {
     public class AddCityRequest
     {

@@ -17,11 +17,8 @@ builder.Services.AddControllers()
                     s.ValidatorOptions.CascadeMode = CascadeMode.Stop;
                     s.ValidatorOptions.LanguageManager.Culture = new CultureInfo("en-US");
                     s.RegisterValidatorsFromAssemblyContaining<Program>();
-
-                    // more validators
                 });
-//warning: type or member is absolete
-//builder.Services.AddFluentValidation(opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

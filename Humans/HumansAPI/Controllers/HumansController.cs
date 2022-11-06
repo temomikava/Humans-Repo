@@ -10,6 +10,7 @@ using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
 using AutoMapper;
 using HumansAPI.DTOs;
+using HumansAPI.Requests;
 
 namespace HumansAPI.Controllers
 {
@@ -82,7 +83,7 @@ namespace HumansAPI.Controllers
         // POST: api/Humans
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Human>> PostHuman(CreateHumanRequest request)
+        public async Task<ActionResult<Human>> PostHuman(AddHumanRequest request)
         {
             await  humans.CreateAsync(mapper.Map<Human>(request));
             return NoContent();

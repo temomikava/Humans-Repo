@@ -1,6 +1,6 @@
 ﻿namespace HumansAPI.Enums
 {
-    public enum ConnectionType :Byte
+    public enum ConnectionType : byte
     {
         Colleague, Acquintance, Relative, Other
     }

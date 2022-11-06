@@ -2,6 +2,7 @@
 using HumansAPI.DTOs;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
+using HumansAPI.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

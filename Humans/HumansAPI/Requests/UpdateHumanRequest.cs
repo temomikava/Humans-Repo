@@ -1,6 +1,6 @@
 ﻿using HumansAPI.Enums;
 
-namespace HumansAPI.DTOs
+namespace HumansAPI.Requests
 {
     public class UpdateHumanRequest
     {
@@ -11,6 +11,6 @@ namespace HumansAPI.DTOs
         public string PersonalNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? CityId { get; set; }
-        
+
     }
 }
