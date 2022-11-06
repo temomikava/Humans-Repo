@@ -61,7 +61,7 @@ namespace HumansAPI.Controllers
             return Ok(new Response
             {
                 PageIndex=request.PageIndex,
-                PageCount=(int)pageCount,
+                TotalPages=(int)pageCount,
                 PageSize=request.PageSize,
                 Items=readHumanDto
             }) ;
