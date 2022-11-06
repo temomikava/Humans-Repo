@@ -7,6 +7,6 @@ namespace HumansAPI.DTOs
         public int Id { get; set; }
         public int FirstHumanId { get; set; }
         public int SecondHumanId { get; set; }       
-        public ConnectionType Type { get; set; }
+        public string Type { get; set; }
     }
 }

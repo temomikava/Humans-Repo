@@ -33,8 +33,9 @@ namespace HumansAPI.Controllers
             
             var report = allHumans.OrderBy(x => x.Id).Select(human =>
             {
-                var relatedConnections = connectedHumans.Where(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);                   
-                var groupedRelatedConnections = relatedConnections.GroupBy(x => x.Type);
+                var relatedConnections = connectedHumans.Where(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);
+                var relatedConnectionsDTO = mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(relatedConnections);
+                var groupedRelatedConnections = relatedConnectionsDTO.GroupBy(x => x.Type);
                 var connections = groupedRelatedConnections.Select(x => new Connection(x.Count(), x.Key)).ToList();
                 return new Relation(human.Id, connections);
             });

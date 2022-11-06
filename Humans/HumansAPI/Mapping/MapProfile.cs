@@ -10,7 +10,7 @@ namespace HumansAPI.Mapping
         public MapProfile()
         {
             CreateMap<Human, AddHumanRequest>().ReverseMap();
-            CreateMap<Human, ReadHumanDTO>().ReverseMap();
+            CreateMap<Human, ReadHumanDTO>().ForPath(x=>x.City.Id,y=>y.MapFrom(d=>d.CityId)).ReverseMap();
             CreateMap<Human, UpdateHumanRequest>().ReverseMap();
             CreateMap<HumanConnection, ReadConnectedHumanDTO>().ReverseMap();
             CreateMap<HumanConnection, AddConnectedHumanRequest>().ReverseMap();
@@ -23,4 +23,5 @@ namespace HumansAPI.Mapping
 
         }
     }
+
 }

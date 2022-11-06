@@ -11,6 +11,7 @@ using HumansAPI.Repositories;
 using AutoMapper;
 using HumansAPI.DTOs;
 using HumansAPI.Requests;
+using HumansAPI.Enums;
 
 namespace HumansAPI.Controllers
 {
@@ -20,20 +21,22 @@ namespace HumansAPI.Controllers
     {
         private readonly IMapper mapper;
         private readonly IRepository<Human> humans;
+        private readonly IRepository<City> cities;
         private readonly IRepository<HumanConnection> connections;
         private readonly IRepository<Phone> phones;
 
-        public HumansController(IMapper mapper, IRepository<Human> humans,
+        public HumansController(IMapper mapper, IRepository<Human> humans,IRepository<City> cities,
                                 IRepository<HumanConnection> connections, IRepository<Phone> phones)
         {
             this.mapper = mapper;
             this.humans = humans;
+            this.cities = cities;
             this.connections = connections;
             this.phones = phones;
         }
 
         // GET: api/Humans
-        [HttpGet]
+        [HttpGet("GetAllHuman")]
         public async Task<ActionResult<IEnumerable<ReadHumanDTO>>> GetHumans()
         {
             var result=await humans.ReadAsync();
@@ -43,8 +46,11 @@ namespace HumansAPI.Controllers
             {
                 var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
                 var connectedHumans=await connections.ReadAsync(x=>x.FirstHumanId==human.Id || x.SecondHumanId==human.Id);
+                var city=await cities.ReadAsync(human.City.Id);
+
                 human.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneDTO>>(numbers));
                 human.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connectedHumans));
+                human.City=mapper.Map<ReadCityDTO>(city);
             }
             return Ok(readHumanDto);
         }
@@ -60,10 +66,15 @@ namespace HumansAPI.Controllers
                 return NotFound();
             }
             var humanDto=mapper.Map<ReadHumanDTO>(human);
+
             var numbers = await phones.ReadAsync(x => x.HumanId == human.Id);
             var connectedHumans = await connections.ReadAsync(x => x.FirstHumanId == human.Id || x.SecondHumanId == human.Id);
+            var city = await cities.ReadAsync(humanDto.City.Id);
+
             humanDto.Phones?.AddRange(mapper.Map<IEnumerable<ReadPhoneDTO>>(numbers));
             humanDto.Connections?.AddRange(mapper.Map<IEnumerable<ReadConnectedHumanDTO>>(connectedHumans));
+            humanDto.City = mapper.Map<ReadCityDTO>(city);
+
             return Ok(humanDto);
         }
 
