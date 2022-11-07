@@ -38,16 +38,16 @@ namespace HumansAPI.Data
                 );
 
             builder.Entity<Human>().HasData(
-                new Human {Id=1, CityId = 2, DateOfBirth = new DateTime(1998, 5, 14), FirstName = "Temur", LastName = "Mikava", Gender =GenderType.Male, PersonalNumber = "48001233222", PhotoPath = "adlkfjakdlsf" },
-                new Human {Id=2, CityId = 1, DateOfBirth = new DateTime(1997, 7, 22), FirstName = "Giorgi", LastName = "Giorgadze", Gender = GenderType.Male, PersonalNumber = "48001231122", PhotoPath = "sdhfkjhdskjf" },
-                new Human {Id=3, CityId = 3, DateOfBirth = new DateTime(2000, 12, 14), FirstName = "Natia", LastName = "Natidze", Gender =GenderType.Female, PersonalNumber = "48341233222", PhotoPath = "akjsdh" },
-                new Human {Id=4, CityId = 5, DateOfBirth = new DateTime(2002, 4, 21), FirstName = "Irakli", LastName = "Ikashvili", Gender = GenderType.Male, PersonalNumber = "48005433222", PhotoPath = "askdjhfdjkf" },
-                new Human {Id=5, CityId = 4, DateOfBirth = new DateTime(2004, 5, 11), FirstName = "Nata", LastName = "Natashvili", Gender = GenderType.Female, PersonalNumber = "48001267222", PhotoPath = "asdfdfd" },
-                new Human {Id=6, CityId = 1, DateOfBirth = new DateTime(1970, 10, 14), FirstName = "Tika", LastName = "Tikashvili", Gender = GenderType.Female, PersonalNumber = "48871233222", PhotoPath = "asdfsdf" },
-                new Human {Id=7, CityId = 2, DateOfBirth = new DateTime(2001, 8, 23), FirstName = "Lasha", LastName = "Lashqarava", Gender = GenderType.Male, PersonalNumber = "48001237622", PhotoPath = "adlkfjjkhakdlsf" },
-                new Human {Id=8, CityId = 3, DateOfBirth = new DateTime(1990, 5, 12), FirstName = "Tazo", LastName = "Tasidze", Gender = GenderType.Male, PersonalNumber = "48001393222", PhotoPath = "asdfd" },
-                new Human {Id=9, CityId = 4, DateOfBirth = new DateTime(1995, 11, 7), FirstName = "Sandro", LastName = "Sandroshvili", Gender = GenderType.Male, PersonalNumber = "48001233243", PhotoPath = "adfe3" },
-                new Human {Id=10, CityId = 4, DateOfBirth = new DateTime(1999, 2, 28), FirstName = "Salome", LastName = "Saloshvili", Gender = GenderType.Female, PersonalNumber = "48763233222", PhotoPath = "adsfdfhdjfh" }
+                new Human {Id=1, CityId = 2, DateOfBirth = new DateTime(1998, 5, 14), FirstName = "Temur", LastName = "Mikava", Gender =GenderType.Male, PersonalNumber = "48001233222" },
+                new Human {Id=2, CityId = 1, DateOfBirth = new DateTime(1997, 7, 22), FirstName = "Giorgi", LastName = "Giorgadze", Gender = GenderType.Male, PersonalNumber = "48001231122"},
+                new Human {Id=3, CityId = 3, DateOfBirth = new DateTime(2000, 12, 14), FirstName = "Natia", LastName = "Natidze", Gender =GenderType.Female, PersonalNumber = "48341233222"},
+                new Human {Id=4, CityId = 5, DateOfBirth = new DateTime(2002, 4, 21), FirstName = "Irakli", LastName = "Ikashvili", Gender = GenderType.Male, PersonalNumber = "48005433222"},
+                new Human {Id=5, CityId = 4, DateOfBirth = new DateTime(2004, 5, 11), FirstName = "Nata", LastName = "Natashvili", Gender = GenderType.Female, PersonalNumber = "48001267222"},
+                new Human {Id=6, CityId = 1, DateOfBirth = new DateTime(1970, 10, 14), FirstName = "Tika", LastName = "Tikashvili", Gender = GenderType.Female, PersonalNumber = "48871233222"},
+                new Human {Id=7, CityId = 2, DateOfBirth = new DateTime(2001, 8, 23), FirstName = "Lasha", LastName = "Lashqarava", Gender = GenderType.Male, PersonalNumber = "48001237622"},
+                new Human {Id=8, CityId = 3, DateOfBirth = new DateTime(1990, 5, 12), FirstName = "Tazo", LastName = "Tasidze", Gender = GenderType.Male, PersonalNumber = "48001393222"},
+                new Human {Id=9, CityId = 4, DateOfBirth = new DateTime(1995, 11, 7), FirstName = "Sandro", LastName = "Sandroshvili", Gender = GenderType.Male, PersonalNumber = "48001233243"},
+                new Human {Id=10, CityId = 4, DateOfBirth = new DateTime(1999, 2, 28), FirstName = "Salome", LastName = "Saloshvili", Gender = GenderType.Female, PersonalNumber = "48763233222" }
                 );
             builder.Entity<Phone>().HasData(
                 new Phone { Id = 1, HumanId = 2, Type = PhoneType.Office, PhoneNumber = "344433334" },
