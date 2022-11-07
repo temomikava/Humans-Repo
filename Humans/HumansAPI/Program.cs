@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HumansAPI;
 using HumansAPI.Data;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IRepository<Human>, Repository<Human>>();
 builder.Services.AddScoped<IRepository<City>, Repository<City>>();
 builder.Services.AddScoped<IRepository<HumanConnection>, Repository<HumanConnection>>();
 builder.Services.AddScoped<IRepository<Phone>, Repository<Phone>>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 
@@ -40,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

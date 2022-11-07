@@ -24,15 +24,18 @@ namespace HumansAPI.Controllers
         private readonly IRepository<City> cities;
         private readonly IRepository<HumanConnection> connections;
         private readonly IRepository<Phone> phones;
+        private readonly IImageService imageService;
 
         public HumansController(IMapper mapper, IRepository<Human> humans,IRepository<City> cities,
-                                IRepository<HumanConnection> connections, IRepository<Phone> phones)
+                                IRepository<HumanConnection> connections, IRepository<Phone> phones,
+                               IImageService imageService)
         {
             this.mapper = mapper;
             this.humans = humans;
             this.cities = cities;
             this.connections = connections;
             this.phones = phones;
+            this.imageService = imageService;
         }
 
         // GET: api/Humans
@@ -90,6 +93,18 @@ namespace HumansAPI.Controllers
             return Ok(humanDto);
         }
 
+        [HttpPut("UploadImage")]
+        public async Task<IActionResult> UploadImage([FromForm] UploadImageRequest request)
+        {
+            var human =await humans.ReadAsync(request.HumanId);
+            if (human==null)
+            {
+                return NotFound();
+            }
+            human.PhotoPath = await imageService.UploadImage(request.Image);
+            await humans.UpdateAsync(human);
+            return NoContent();
+        }
         // PUT: api/Humans/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
