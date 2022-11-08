@@ -45,6 +45,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseMiddleware<ExceptionHandler>();
 app.UseAuthorization();
 
 app.MapControllers();
