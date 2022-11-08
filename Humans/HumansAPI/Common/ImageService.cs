@@ -1,4 +1,4 @@
-﻿namespace HumansAPI
+﻿namespace HumansAPI.Common
 {
     public class ImageService : IImageService
     {
@@ -9,7 +9,7 @@
             var folder = "Images";
             var imagePath = $@"{folder}/{imageName}";
             Directory.CreateDirectory(folder);
-            await using(var fileStream=new FileStream(imagePath, FileMode.Create))
+            await using (var fileStream = new FileStream(imagePath, FileMode.Create))
             {
                 await imageFile.CopyToAsync(fileStream);
             }

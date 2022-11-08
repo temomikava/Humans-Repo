@@ -1,6 +1,6 @@
 ﻿using HumansAPI.DTOs;
 
-namespace HumansAPI
+namespace HumansAPI.Common
 {
     public class Response
     {

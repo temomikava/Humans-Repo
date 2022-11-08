@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HumansAPI;
+using HumansAPI.Common;
 using HumansAPI.Data;
 using HumansAPI.Models.Domain;
 using HumansAPI.Repositories;

@@ -12,6 +12,7 @@ using AutoMapper;
 using HumansAPI.DTOs;
 using HumansAPI.Requests;
 using HumansAPI.Enums;
+using HumansAPI.Common;
 
 namespace HumansAPI.Controllers
 {
