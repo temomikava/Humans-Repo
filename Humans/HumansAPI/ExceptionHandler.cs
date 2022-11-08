@@ -20,7 +20,7 @@ namespace HumansAPI
             }
             catch (Exception ex)
             {
-
+              await  HandleExceptionAsync(context,ex);
                
             }
         }
