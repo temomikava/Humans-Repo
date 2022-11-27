@@ -27,16 +27,10 @@ namespace HumansAPI.Validators
             RuleFor(x => x.CityId).NotNull().Must(IfExistCity).WithMessage("ქალაქი ვერ მოიძებნა");
         }
 
-        private bool IfExistCity(int cityId)
-        {
-            return cities.CheckAsync(x => x.Id == cityId).Result;
-        }
-        private bool IfExistPersonalNumber(string? personalNumber)
-        {
-            if (humans.CheckAsync(x => x.PersonalNumber == personalNumber).Result)
-                return false;
-            return true;
-        }
+        private bool IfExistCity(int cityId) => cities.CheckAsync(x => x.Id == cityId).Result;
+        
+        private bool IfExistPersonalNumber(string? personalNumber) => ! humans.CheckAsync(x => x.PersonalNumber == personalNumber).Result;
+        
     }
 
 

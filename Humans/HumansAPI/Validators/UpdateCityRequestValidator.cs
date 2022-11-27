@@ -17,11 +17,7 @@ namespace HumansAPI.Validators
                 .Matches("^[a-zA-Z]*$|^[ა-ჰ]*$").WithMessage("ქალაქის სახელი უნდა შედგემოდეს მხოლოდ ქართული ან მხოლოდ ლათინური სიმბოლოებისგან.")
                 .Must(IfExistCity).WithMessage("ქალაქი იგივე სახელით უკვე არსებობს.");
         }
-        private bool IfExistCity(string? name)
-        {
-            if (cities.CheckAsync(x => x.Name == name).Result == true)
-                return false;
-            return true;
-        }
+        private bool IfExistCity(string? name) => ! cities.CheckAsync(x => x.Name == name).Result;
+       
     }
 }

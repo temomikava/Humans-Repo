@@ -19,15 +19,9 @@ namespace HumansAPI.Validators
             RuleFor(x => x.Type).NotEmpty().IsInEnum();
             RuleFor(x => x.PhoneNumber).NotEmpty().Length(4, 50);
         }
-        private bool IfExistPhone(int id)
-        {
-            if (phones.CheckAsync(x => x.Id == id).Result)
-                return false;
-            return true;
-        }
-        private bool IfExistHuman(int humanId)
-        {
-            return humans.CheckAsync(x => x.Id == humanId).Result;
-        }
+        private bool IfExistPhone(int id) => ! phones.CheckAsync(x => x.Id == id).Result;
+
+        private bool IfExistHuman(int humanId) => humans.CheckAsync(x => x.Id == humanId).Result;
+        
     }
 }

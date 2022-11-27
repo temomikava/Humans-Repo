@@ -111,9 +111,15 @@ namespace HumansAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> PutHuman(UpdateHumanRequest request)
         {
-            if (! await humans.CheckAsync(x=>x.Id==request.Id))
+            var human = await humans.ReadAsync(request.Id);
+            if (human is null)
             {
                 return NotFound();
+            }
+            var humanByPersonalNumber = await humans.ReadAsync(x => x.PersonalNumber == request.PersonalNumber);
+            if (humanByPersonalNumber.Count()!=0 && human.Id != humanByPersonalNumber.Single().Id) 
+            {
+                return BadRequest("ადამიანი იგივერ პირადი ნომრით უკვე დარეგისტრირებულია");
             }
             await humans.UpdateAsync(request.Id, mapper.Map<Human>(request));
             return NoContent();

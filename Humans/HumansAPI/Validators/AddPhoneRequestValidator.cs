@@ -21,15 +21,9 @@ namespace HumansAPI.Validators
             
         }
 
-        private bool IfExistHuman(int humanId)
-        {
-            return humans.CheckAsync(x => x.Id == humanId).Result;
-        }
-        private  bool IfExistPhone(string number)
-        {
-            if ( phones.CheckAsync(x => x.PhoneNumber == number).Result)
-                return false;
-            return true;
-        }
+        private bool IfExistHuman(int humanId) => humans.CheckAsync(x => x.Id == humanId).Result;
+
+        private bool IfExistPhone(string number) => ! phones.CheckAsync(x => x.PhoneNumber == number).Result;
+      
     }
 }
